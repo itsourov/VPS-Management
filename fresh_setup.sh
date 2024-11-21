@@ -2,7 +2,7 @@
 
 # Update and upgrade packages
 echo "Updating package lists..."
-sudo apt update -y && sudo apt upgrade -y
+sudo apt update -y
 
 # Install essential packages
 echo "Installing Nginx..."
@@ -27,6 +27,8 @@ sudo cp /root/.ssh/authorized_keys /home/$NEW_USER/.ssh/
 sudo chown -R $NEW_USER:$NEW_USER /home/$NEW_USER/.ssh
 sudo chmod 700 /home/$NEW_USER/.ssh
 sudo chmod 600 /home/$NEW_USER/.ssh/authorized_keys
+
+su - $NEW_USER
 
 # Install PHP 8.3 and extensions
 echo "Installing PHP 8.3 and extensions..."
