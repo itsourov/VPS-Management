@@ -38,9 +38,19 @@ sudo apt install -y php8.3-fpm php8.3-mysql php8.3-cli php8.3-common php8.3-mbst
 echo "Installing MySQL..."
 sudo apt install -y mysql-server
 
-# Generate a random MySQL root password
-MYSQL_ROOT_PASSWORD=$(openssl rand -base64 16)
-echo "Generated MySQL root password: $MYSQL_ROOT_PASSWORD"
+# Prompt for MySQL root password
+read -sp "Enter MySQL root password: " MYSQL_ROOT_PASSWORD
+echo
+read -sp "Confirm MySQL root password: " MYSQL_ROOT_PASSWORD_CONFIRM
+echo
+
+# Check if passwords match
+if [ "$MYSQL_ROOT_PASSWORD" != "$MYSQL_ROOT_PASSWORD_CONFIRM" ]; then
+    echo "Passwords do not match. Please re-run the script."
+    exit 1
+fi
+
+# Save the MySQL root password in a file
 echo $MYSQL_ROOT_PASSWORD > /home/$NEW_USER/mysql_root_password.txt
 sudo chown $NEW_USER:$NEW_USER /home/$NEW_USER/mysql_root_password.txt
 sudo chmod 600 /home/$NEW_USER/mysql_root_password.txt
